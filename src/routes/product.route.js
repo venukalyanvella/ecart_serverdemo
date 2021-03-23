@@ -1,6 +1,10 @@
 const express = require('express');
 const router = express.Router();
 const path = require('path');
+const fetch = require('node-fetch');
+const algoliasearch = require('algoliasearch');
+const client = algoliasearch(process.env.APP_KEY, process.env.ADMIN_KEY)
+const index = client.initIndex('products');
 
 
 router.get('/allProducts', (request, response) => {
@@ -8,8 +12,8 @@ router.get('/allProducts', (request, response) => {
   fetch(url).then((response) => {
       return response.json();
     }).then((products) => {
-     console.log(products);
-      return res.send(products)
+    //  console.log(products);
+      return response.send(products)
     })
     .catch((error) => {
       console.log('Error While getting Data', error);
@@ -30,7 +34,7 @@ router.get('/search', (request, response) => {
   index.search(query)
     .then(({hits }) => {
         console.log(hits);
-         return res.send(hits)
+         return response.send(hits)
       })
     .catch(error => {
         response.send(error)
