@@ -26,7 +26,7 @@ app.use(function (req, res, next) {
 
 //routing
 
-app.get('/api',productRoute)
+app.use('/api',productRoute)
 
 
 //server listining
